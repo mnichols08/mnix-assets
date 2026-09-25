@@ -1,7 +1,11 @@
-export const ASSET_REPOSITORY = "mnichols08/mnix-assets";
-export const hostingAuthorized = (asset) => asset.redistributable === true ||
-  (asset.redistributable === false && asset.distributionAuthorization === "owner-requested-existing-collection" &&
-   asset.authorizationDate && asset.sourceUrl && asset.legalNotes);
+export const ASSET_ORIGIN = "https://assets.patproductions.net";
+export const hostingAuthorized = (asset) =>
+  asset.redistributable === true ||
+  (asset.redistributable === false &&
+    asset.distributionAuthorization === "owner-requested-existing-collection" &&
+    asset.authorizationDate &&
+    asset.sourceUrl &&
+    asset.legalNotes);
 export function validateAssets(manifest) {
   if (manifest?.schemaVersion !== 1 || !Array.isArray(manifest.assets))
     throw new Error(
@@ -68,19 +72,18 @@ export function validateAssets(manifest) {
       if (
         asset.downloadUrl &&
         (!/^[a-zA-Z0-9._-]+$/.test(asset.releaseTag) ||
-          !new RegExp(
-            `^https://github\\.com/${ASSET_REPOSITORY}/releases/download/${asset.releaseTag.replace(/\./g, "\\.")}/[a-zA-Z0-9._-]+$`,
-          ).test(asset.downloadUrl))
+          !asset.downloadUrl.startsWith(`${ASSET_ORIGIN}/${asset.releaseTag}/`) ||
+          !/^[a-zA-Z0-9._-]+$/.test(asset.downloadUrl.split("/").pop()))
       )
         throw new Error(
-          `Hosted asset must use its pinned GitHub release: ${asset.id}`,
+          `Hosted asset must use its versioned assets.patproductions.net URL: ${asset.id}`,
         );
     }
     if (
       asset.browserFetch &&
       (asset.distributionMode !== "hosted" || !asset.downloadUrl)
     )
-      throw new Error(`Browser fetch requires a hosted release: ${asset.id}`);
+      throw new Error(`Browser fetch requires a hosted asset: ${asset.id}`);
   }
   return manifest;
 }
