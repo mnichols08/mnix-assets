@@ -1,0 +1,19 @@
+# Large downloadable binaries belong in GitHub Releases, not in Git history.
+*.zip
+*.iso
+*.img
+*.img.gz
+*.ima
+*.7z
+*.rar
+*.vhd
+*.vhdx
+*.qcow2
+*.vmdk
+*.exe
+*.com
+*.sys
+*.dll
+*.bin
+*.wasm
+/uploads/
