@@ -2,10 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MNIX asset catalog",
   "type": "object",
-  "required": [
-    "schemaVersion",
-    "assets"
-  ],
+  "required": ["schemaVersion", "assets"],
   "properties": {
     "schemaVersion": {
       "const": 1
@@ -68,59 +65,31 @@
           "minLength": 1
         },
         "downloadUrl": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "sourceUrl": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "homepage": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "licenseSource": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "releaseTag": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "sha256": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "archiveType": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "sourceNotes": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "distributionMode": {
-          "enum": [
-            "hosted",
-            "external-download",
-            "user-supplied"
-          ]
+          "enum": ["hosted", "external-download", "user-supplied"]
         },
         "enabled": {
           "type": "boolean"
@@ -132,10 +101,7 @@
           "type": "boolean"
         },
         "sizeBytes": {
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "minimum": 1
         },
         "runtime": {
@@ -153,11 +119,7 @@
             }
           },
           "then": {
-            "required": [
-              "sha256",
-              "sizeBytes",
-              "licenseSource"
-            ],
+            "required": ["sha256", "sizeBytes", "licenseSource"],
             "properties": {
               "sha256": {
                 "type": "string",
@@ -187,7 +149,10 @@
                     "const": false
                   },
                   "distributionAuthorization": {
-                    "const": "owner-requested-existing-collection"
+                    "enum": [
+                      "owner-requested-existing-collection",
+                      "owner-requested-hosting"
+                    ]
                   }
                 }
               }
