@@ -2,7 +2,9 @@ export const ASSET_ORIGIN = "https://assets.patproductions.net";
 export const hostingAuthorized = (asset) =>
   asset.redistributable === true ||
   (asset.redistributable === false &&
-    asset.distributionAuthorization === "owner-requested-existing-collection" &&
+    ["owner-requested-existing-collection", "owner-requested-hosting"].includes(
+      asset.distributionAuthorization,
+    ) &&
     asset.authorizationDate &&
     asset.sourceUrl &&
     asset.legalNotes);
@@ -72,7 +74,9 @@ export function validateAssets(manifest) {
       if (
         asset.downloadUrl &&
         (!/^[a-zA-Z0-9._-]+$/.test(asset.releaseTag) ||
-          !asset.downloadUrl.startsWith(`${ASSET_ORIGIN}/${asset.releaseTag}/`) ||
+          !asset.downloadUrl.startsWith(
+            `${ASSET_ORIGIN}/${asset.releaseTag}/`,
+          ) ||
           !/^[a-zA-Z0-9._-]+$/.test(asset.downloadUrl.split("/").pop()))
       )
         throw new Error(
